@@ -1,0 +1,7 @@
+@if (dataResource.hasValue()) {
+  @if (dataResource.value(); as data) {
+    <app-profile-view [data]="data" />
+  } @else {
+    <p>Not found.</p>
+  }
+}
