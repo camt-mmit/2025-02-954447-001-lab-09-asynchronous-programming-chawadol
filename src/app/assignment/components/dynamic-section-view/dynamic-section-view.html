@@ -1,0 +1,19 @@
+<div class="section-view">
+  @for (section of sections(); let sectionindex = $index; track sectionindex) {
+    <div class="section">
+      <div class="section-header">
+        <b>
+          <span class="section-number"> Section {{ sectionindex + 1 }} </span>
+        </b>
+      </div>
+
+      @for (number of section; let inputindex = $index; track inputindex) {
+        <div class="section-numbers">
+          <span class="number-text"> Number {{ inputindex + 1 }}: {{ number }} </span>
+        </div>
+      }
+
+      <p>Result {{ total()[sectionindex] }}</p>
+    </div>
+  }
+</div>

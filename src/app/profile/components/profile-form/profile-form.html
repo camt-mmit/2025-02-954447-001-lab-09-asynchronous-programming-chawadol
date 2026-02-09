@@ -44,7 +44,7 @@
           <button type="button" [disabled]="$last" (click)="moveFriend($index, +1)">v</button>
           <label>
             <b>Friend {{ $index + 1 }}</b>
-            <input type="text" [formField]="friend" />
+            <input type="text" [formField]="friend.value" />
           </label>
           <button type="button" [disabled]="$count === 1" (click)="removeFriend($index)">X</button>
           <span>{{ friend().metadata(friendUCNameKey)!() }}</span>

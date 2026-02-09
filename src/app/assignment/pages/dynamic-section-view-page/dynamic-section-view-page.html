@@ -1,0 +1,5 @@
+@if (dataResource.hasValue()) {
+  <app-dynamic-section-view [sections]="dataResource.value()" />
+} @else {
+  <p>No info</p>
+}

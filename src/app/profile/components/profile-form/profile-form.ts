@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, linkedSignal, model } from '@angular/core';
 import { applyEach, createMetadataKey, form, FormField, metadata } from '@angular/forms/signals';
 import { Profile } from '../../types';
 import { createFriend } from '../../helpers';
@@ -13,14 +13,27 @@ import { createFriend } from '../../helpers';
 export class ProfileForm {
   readonly data = model.required<Profile>();
   // data = signal ตัวแทนข้อมูลที่เราจะใช้
+
+  protected readonly model = linkedSignal(() => {
+    const { friends, ...rest } = this.data();
+
+    return {
+      ...rest,
+      friends: friends.map((value) => ({ value })) as readonly {
+        readonly value: string;
+      }[],
+    } as const;
+  });
+
+  // data 2 way binding = ค่านี้ถูกส่งมาจากข้างนอก/ส่งออกไปข้างนอกได้ -> linkedSignal เอาไว้ prevent
   protected readonly friendsCountKey = createMetadataKey<number>();
   protected readonly friendUCNameKey = createMetadataKey<string>();
   // metadata key ref to fieldtree เอาไว้อ้างอิงค่า
-  protected readonly form = form(this.data, (path) => {
+  protected readonly form = form(this.model, (path) => {
     metadata(path.friends, this.friendsCountKey, ({ value }) => value().length);
 
     applyEach(path.friends, (path) => {
-      metadata(path, this.friendUCNameKey, ({ value }) => value().toLocaleUpperCase());
+      metadata(path, this.friendUCNameKey, ({ value }) => value().value.toLocaleUpperCase());
     });
   });
   // function form สร้าง this.signal ที่ตรงกับตัวโปรไฟล์
@@ -28,7 +41,7 @@ export class ProfileForm {
   //applyeach apply schema ให้กับ element ทุกตัว path ตรง applyeach = path ของ friend แต่ละคน
 
   protected addFriend(): void {
-    this.form.friends().value.update((items) => [...items, createFriend()]);
+    this.form.friends().value.update((items) => [...items, { value: createFriend() }]);
   }
 
   protected removeFriend(index: number): void {
