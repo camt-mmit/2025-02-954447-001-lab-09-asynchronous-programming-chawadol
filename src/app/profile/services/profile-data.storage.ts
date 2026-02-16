@@ -8,6 +8,7 @@ const keyId = 'profile-data';
 })
 export class ProfileDataStorage {
   private readonly keyName = `${inject(APP_ID)}-${keyId}` as const;
+
   async get(): Promise<Profile | null> {
     return JSON.parse(localStorage.getItem(this.keyName) ?? 'null');
   }

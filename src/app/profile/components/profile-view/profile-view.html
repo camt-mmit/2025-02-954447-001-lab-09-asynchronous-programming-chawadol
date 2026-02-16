@@ -1,16 +1,20 @@
-<dl>
-  <dt>Student ID:</dt>
-  <dd>{{ data().studentId }}</dd>
+<dl class="_main-data">
+  <dt>Student ID</dt>
+  <dd>
+    <span class="app-cl-code">{{ data().studentId }}</span>
+  </dd>
 
-  <dt>Student Name:</dt>
+  <dt>Fullname</dt>
   <dd>{{ data().firstname }} {{ data().lastname }}</dd>
 
-  <dt>Age:</dt>
-  <dd>{{ data().age }}</dd>
+  <dt>Age</dt>
+  <dd>
+    <span class="app-cl-number">{{ data().age }}</span>
+  </dd>
 
-  <dt>Autobiography:</dt>
-  <dd>{{ data().autobiography }}</dd>
+  <dt>Autobiography</dt>
+  <dd class="_autobiography">{{ data().autobiography }}</dd>
 
-  <dt>Friends:</dt>
-  <dd>{{ joinedFriends() }}</dd>
+  <dt>Friends</dt>
+  <dd>{{ joinFriend() }}</dd>
 </dl>

@@ -11,5 +11,5 @@ import { Profile } from '../../types';
 export class ProfileView {
   readonly data = input.required<Profile>();
 
-  protected readonly joinedFriends = computed(() => this.data().friends.join(', '));
+  protected readonly joinFriend = computed(() => this.data().friends.join(', '));
 }

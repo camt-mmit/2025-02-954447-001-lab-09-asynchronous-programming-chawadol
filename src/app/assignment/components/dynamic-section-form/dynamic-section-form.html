@@ -2,25 +2,31 @@
   <legend>
     <button type="button" (click)="onAddSection()">+ Section</button>
   </legend>
-  @for (section of data(); let i = $index; track i) {
+
+  @for (section of inputForm; track section; let s = $index) {
     <fieldset>
       <legend>
-        Section {{ i + 1 }}
-        <button type="button" (click)="onRemoveSection(i)" [disabled]="$count === 1">X</button>
+        Section {{ s + 1 }}
+        <button type="button" (click)="onRemoveSection(s)" [disabled]="inputForm.length === 1">
+          X
+        </button>
       </legend>
 
-      <button type="button" (click)="onAddInput(i)">+ Input</button>
+      <button type="button" (click)="onAddInput(s)">+ Input</button>
 
-      @for (value of section; let j = $index; track j) {
+      @for (input of section; track input; let i = $index) {
         <div>
-          {{ $index + 1 }}.
-          <input type="number" [formField]="inputForm().at(i).at(j)" />
+          {{ i + 1 }}.
 
-          <button type="button" (click)="onRemoveInput(i, j)" [disabled]="$count === 1">X</button>
+          <input type="number" [formField]="input" />
+
+          <button type="button" (click)="onRemoveInput(s, i)" [disabled]="section.length === 1">
+            X
+          </button>
         </div>
       }
 
-      <p><b>Result:</b> {{ sectionTotal(section) }}</p>
+      <p><b>Result:</b> {{ sectionTotal(sectionModel()[s]) }}</p>
     </fieldset>
   }
 </fieldset>

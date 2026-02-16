@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, effect, inject, resource } from '@angular/core';
+import { createProfile } from '../../helpers';
 import { ProfileForm } from '../../components/profile-form/profile-form';
 import { ProfileDataStorage } from '../../services/profile-data.storage';
-import { createProfile } from '../../helpers';
 
 @Component({
   selector: 'app-profile-form-page',
@@ -11,8 +11,7 @@ import { createProfile } from '../../helpers';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileFormPage {
-  protected readonly dataStorage = inject(ProfileDataStorage);
-
+  private readonly dataStorage = inject(ProfileDataStorage);
   protected readonly dataResource = resource({
     loader: async () => (await this.dataStorage.get()) ?? createProfile(),
   });

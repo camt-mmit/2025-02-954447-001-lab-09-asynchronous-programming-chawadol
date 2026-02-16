@@ -1,57 +1,51 @@
-<fieldset [disabled]="form().disabled()">
-  <div>
+<fieldset [disabled]="form().disabled()" class="main-form">
+  <div class="form-self-field">
     <label>
       <b>Student ID</b>
       <input type="text" [formField]="form.studentId" />
     </label>
     <br />
-
     <label>
-      <b>Firstname</b>
+      <b>First Name</b>
       <input type="text" [formField]="form.firstname" />
     </label>
     <br />
-
     <label>
-      <b>Lastname</b>
+      <b>Last Name</b>
       <input type="text" [formField]="form.lastname" />
     </label>
     <br />
-
     <label>
       <b>Age</b>
-      <input type="number" [formField]="form.age" />
+      <input type="number" step="1" [formField]="form.age" />
     </label>
     <br />
-
     <label>
-      <b>Autobiography</b>
+      <b>Autobiography</b><br />
       <textarea [formField]="form.autobiography"></textarea>
     </label>
-    <br />
   </div>
-
   <fieldset [disabled]="form.friends().disabled()">
     <legend>
-      Friends ({{ form.friends().metadata(friendsCountKey)!() }})
+      Friends [{{ form.friends().metadata(friendCountKey)!() }}]
       <button type="button" (click)="addFriend()">+</button>
     </legend>
-    <!-- !() = บอกว่ามันมีแน่ๆ -->
-    <div>
+
+    <div class="friend-form">
       @for (friend of form.friends; track friend) {
         <div>
           <button type="button" [disabled]="$first" (click)="moveFriend($index, -1)">^</button>
-          <button type="button" [disabled]="$last" (click)="moveFriend($index, +1)">v</button>
-          <label>
-            <b>Friend {{ $index + 1 }}</b>
-            <input type="text" [formField]="friend.value" />
+          <button type="button" [disabled]="$last" (click)="moveFriend($index, 1)">V</button>
+          <label
+            ><b>Friend {{ $index + 1 }}</b>
+            <input type="text" [formField]="friend" />
           </label>
           <button type="button" [disabled]="$count === 1" (click)="removeFriend($index)">X</button>
-          <span>{{ friend().metadata(friendUCNameKey)!() }}</span>
+        </div>
+        <div>
+          {{ friend().metadata(friendUcNameKey)!() }}
         </div>
       }
-
-      <!-- form.friends relate type = readonly string เราเลยสามารถดึง field ของมันออกมาได้ -->
     </div>
   </fieldset>
 </fieldset>
